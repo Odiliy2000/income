@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -6,12 +7,17 @@ SECRET_KEY = 'replace-this-secret-key'
 
 DEBUG = True
 
-import os
+RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
-ALLOWED_HOSTS = [
-    os.environ.get('RENDER_EXTERNAL_HOSTNAME', '127.0.0.1'),
-    'income-tracker-b1fz.onrender.com'
-]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
+if RENDER_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
+
+
+ALLOWED_HOSTS.append('income-tracker-b1fz.onrender.com')
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
