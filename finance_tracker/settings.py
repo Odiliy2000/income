@@ -7,17 +7,16 @@ SECRET_KEY = 'replace-this-secret-key'
 
 DEBUG = True
 
-RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
-
-if RENDER_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'income-tracker-b1fz.onrender.com'
+]
 
 
-ALLOWED_HOSTS.append('income-tracker-b1fz.onrender.com')
-
+render_host = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_host:
+    ALLOWED_HOSTS.append(render_host)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
