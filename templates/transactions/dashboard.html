@@ -1,0 +1,48 @@
+<h1>Finance Dashboard</h1>
+<p><strong>Income:</strong> ${{ income }}</p>
+<p><strong>Outcome:</strong> ${{ outcome }}</p>
+<p><strong>Balance:</strong> ${{ balance }}</p>
+
+<h3>Filter Transactions</h3>
+<form method="get">
+    <label>From: <input type="date" name="start_date" value="{{ start_date }}"></label>
+    <label>To: <input type="date" name="end_date" value="{{ end_date }}"></label>
+    <label>Type:
+        <select name="type">
+            <option value="">All</option>
+            <option value="income" {% if t_type == 'income' %}selected{% endif %}>Income</option>
+            <option value="outcome" {% if t_type == 'outcome' %}selected{% endif %}>Outcome</option>
+        </select>
+    </label>
+    <button type="submit">Apply</button>
+</form>
+
+<a href="{% url 'add_transaction' %}">Add Transaction</a>
+
+<canvas id="financeChart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('financeChart').getContext('2d');
+const financeChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Income', 'Outcome'],
+        datasets: [{
+            label: 'Income vs Outcome',
+            data: [{{ income }}, {{ outcome }}],
+            backgroundColor: ['green', 'red'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+    }
+});
+</script>
+
+<h2>Transactions</h2>
+<ul>
+  {% for t in transactions %}
+    <li>{{ t.date|date:"Y-m-d" }} | {{ t.type }} | ${{ t.amount }} | {{ t.description }}</li>
+  {% endfor %}
+</ul>
