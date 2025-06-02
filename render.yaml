@@ -5,7 +5,8 @@ services:
     buildCommand: |
       pip install -r requirements.txt
     startCommand: |
-      python manage.py migrate && gunicorn finance_tracker.wsgi
+      python manage.py migrate &&
+      gunicorn finance_tracker.wsgi --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true
