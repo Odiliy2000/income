@@ -1,13 +1,15 @@
 services:
   - type: web
-    name: finance-tracker
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn finance_tracker.wsgi"
+    name: income-tracker
+    runtime: python
+    buildCommand: |
+      pip install -r requirements.txt
+    startCommand: |
+      python manage.py migrate && gunicorn finance_tracker.wsgi
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "false"
       - key: ALLOWED_HOSTS
-        value: "onrender.com"
+        value: income-tracker-b1fz.onrender.com
