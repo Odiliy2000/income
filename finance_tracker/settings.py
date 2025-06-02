@@ -9,7 +9,7 @@ DEBUG = True
 import os
 
 ALLOWED_HOSTS = [
-    os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost'),
+    os.environ.get('RENDER_EXTERNAL_HOSTNAME', '127.0.0.1'),
     'income-tracker-b1fz.onrender.com'
 ]
 
